@@ -1,25 +1,26 @@
 package ru.quiz.service;
 
-import java.io.InputStream;
-import java.io.PrintStream;
+import org.springframework.stereotype.Service;
+
 import java.util.Scanner;
 
+@Service
 public class UserIOImpl implements UserIO {
 
     private static final int COUNT_OF_ATTEMPTS = 5;
 
-    private PrintStream printStream;
+    private InputOutputProvider inputOutputProvider;
 
     private Scanner scanner;
 
-    public UserIOImpl(PrintStream printStream, InputStream inputStream) {
-        this.printStream = printStream;
-        this.scanner = new Scanner(inputStream);
+    public UserIOImpl(InputOutputProvider inputOutputProvider) {
+        this.inputOutputProvider = inputOutputProvider;
+        scanner = new Scanner(inputOutputProvider.getInputStream());
     }
 
     @Override
     public void printLine(String line) {
-        printStream.println(line);
+        inputOutputProvider.getPrintStream().println(line);
     }
 
     @Override

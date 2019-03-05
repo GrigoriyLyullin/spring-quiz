@@ -1,5 +1,6 @@
 package ru.quiz.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,6 +16,19 @@ import static org.mockito.Mockito.*;
 
 class UserIOImplTest {
 
+    private InputOutputProvider inputOutputProvider;
+
+    private PrintStream printStream;
+
+    @BeforeEach
+    void setUp() {
+        inputOutputProvider = mock(InputOutputProviderImpl.class);
+        printStream = mock(PrintStream.class);
+
+        when(inputOutputProvider.getPrintStream()).thenReturn(printStream);
+        when(inputOutputProvider.getInputStream()).thenReturn(mock(InputStream.class));
+    }
+
     @Test
     void printLine() {
         List<Integer> output = new ArrayList<>();
@@ -26,7 +40,8 @@ class UserIOImplTest {
             }
         });
 
-        new UserIOImpl(printStream, mock(InputStream.class)).printLine("test");
+        when(inputOutputProvider.getPrintStream()).thenReturn(printStream);
+        new UserIOImpl(inputOutputProvider).printLine("test");
 
         byte[] byteArray = getBytes(output);
         String outputString = new String(byteArray);
@@ -37,7 +52,9 @@ class UserIOImplTest {
     @Test
     void readValidAnswer() {
         ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
-        int answer = new UserIOImpl(mock(PrintStream.class), in).readAnswer(1);
+        when(inputOutputProvider.getInputStream()).thenReturn(in);
+
+        int answer = new UserIOImpl(inputOutputProvider).readAnswer(1);
         assertEquals(1, answer);
     }
 
@@ -46,10 +63,9 @@ class UserIOImplTest {
         String separator = System.lineSeparator();
         String inputString = "a" + separator + "b" + separator + "c" + separator + "d" + separator + "e" + separator + "f";
         ByteArrayInputStream in = new ByteArrayInputStream(inputString.getBytes());
-        PrintStream printStream = mock(PrintStream.class);
-        assertThrows(IllegalArgumentException.class, () -> {
-            new UserIOImpl(printStream, in).readAnswer(1);
-        });
+        when(inputOutputProvider.getInputStream()).thenReturn(in);
+
+        assertThrows(IllegalArgumentException.class, () -> new UserIOImpl(inputOutputProvider).readAnswer(1));
         verify(printStream, times(5)).println("Wrong number format!");
     }
 
@@ -58,9 +74,9 @@ class UserIOImplTest {
         String separator = System.lineSeparator();
         String inputString = "8" + separator + "7";
         ByteArrayInputStream in = new ByteArrayInputStream(inputString.getBytes());
-        PrintStream printStream = mock(PrintStream.class);
+        when(inputOutputProvider.getInputStream()).thenReturn(in);
         int max = 7;
-        int answer = new UserIOImpl(printStream, in).readAnswer(max);
+        int answer = new UserIOImpl(inputOutputProvider).readAnswer(max);
 
         verify(printStream, times(1)).println("Answer is a number from 1 to " + max);
         assertEquals(7, answer);
@@ -69,7 +85,7 @@ class UserIOImplTest {
     @Test
     void readAnswerWhenMaxIsZero() {
         assertThrows(IllegalArgumentException.class,
-                () -> new UserIOImpl(mock(PrintStream.class), mock(InputStream.class)).readAnswer(0));
+                () -> new UserIOImpl(inputOutputProvider).readAnswer(0));
 
     }
 

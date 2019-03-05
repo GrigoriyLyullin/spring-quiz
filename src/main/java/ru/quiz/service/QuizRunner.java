@@ -4,7 +4,7 @@ import ru.quiz.entity.QuizResult;
 
 import java.io.IOException;
 
-public interface QuizAction {
+public interface QuizRunner {
 
     QuizResult performQuiz() throws IOException;
 
