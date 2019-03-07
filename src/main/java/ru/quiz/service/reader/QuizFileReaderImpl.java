@@ -1,37 +1,34 @@
-package ru.quiz.service;
+package ru.quiz.service.reader;
 
-import ru.quiz.entity.Question;
+import org.springframework.stereotype.Service;
+import ru.quiz.domain.Question;
+import ru.quiz.service.provider.QuestionsFileProvider;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class QuizFileReaderImpl implements QuizFileReader {
 
     private static final String COMMA_SEPARATOR = ",";
 
-    private File questionsFile;
+    private final QuestionsFileProvider questionsFileProvider;
 
-    public QuizFileReaderImpl(File questionsFile) {
-        this.questionsFile = questionsFile;
+    public QuizFileReaderImpl(QuestionsFileProvider questionsFileProvider) {
+        this.questionsFileProvider = questionsFileProvider;
     }
 
     @Override
     public List<Question> readAllQuestions() throws IOException {
         List<Question> questions = new ArrayList<>();
-        if (questionsFile != null && questionsFile.exists() && questionsFile.canRead()) {
-
-            BufferedReader reader = new BufferedReader(new FileReader(questionsFile));
-            String line = reader.readLine();
-            while (line != null) {
-                questions.add(parseQuestionString(line));
-                line = reader.readLine();
-            }
-        } else {
-            throw new IllegalArgumentException("File does not exist or cannot be read");
+        BufferedReader reader = new BufferedReader(new FileReader(questionsFileProvider.getQuestionsFile()));
+        String line = reader.readLine();
+        while (line != null) {
+            questions.add(parseQuestionString(line));
+            line = reader.readLine();
         }
         return questions;
     }

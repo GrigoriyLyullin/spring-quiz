@@ -1,4 +1,4 @@
-package ru.quiz.service;
+package ru.quiz.service.util;
 
 public interface UserIO {
 

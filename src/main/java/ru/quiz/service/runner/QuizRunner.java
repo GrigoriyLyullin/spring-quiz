@@ -1,10 +1,10 @@
-package ru.quiz.service;
+package ru.quiz.service.runner;
 
-import ru.quiz.entity.QuizResult;
+import ru.quiz.domain.QuizResult;
 
 import java.io.IOException;
 
-public interface QuizAction {
+public interface QuizRunner {
 
     QuizResult performQuiz() throws IOException;
 
