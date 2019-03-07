@@ -1,8 +1,10 @@
-package ru.quiz.service;
+package ru.quiz.service.provider;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.quiz.utils.IOType;
+import ru.quiz.domain.IOType;
+import ru.quiz.service.provider.InputOutputProvider;
+import ru.quiz.service.provider.InputOutputProviderImpl;
 
 import java.io.InputStream;
 import java.io.PrintStream;

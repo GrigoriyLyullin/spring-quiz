@@ -1,11 +1,14 @@
-package ru.quiz.service;
+package ru.quiz.service.runner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import ru.quiz.entity.Question;
-import ru.quiz.entity.QuizResult;
+import ru.quiz.domain.Question;
+import ru.quiz.domain.QuizResult;
+import ru.quiz.service.runner.QuizRunnerImpl;
+import ru.quiz.service.util.QuizFileReader;
+import ru.quiz.service.util.UserIO;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

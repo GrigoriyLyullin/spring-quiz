@@ -1,6 +1,7 @@
-package ru.quiz.service;
+package ru.quiz.service.util;
 
 import org.springframework.stereotype.Service;
+import ru.quiz.service.provider.InputOutputProvider;
 
 import java.util.Scanner;
 

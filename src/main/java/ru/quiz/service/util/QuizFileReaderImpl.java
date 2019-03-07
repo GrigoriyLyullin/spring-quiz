@@ -1,7 +1,8 @@
-package ru.quiz.service;
+package ru.quiz.service.util;
 
 import org.springframework.stereotype.Service;
-import ru.quiz.entity.Question;
+import ru.quiz.domain.Question;
+import ru.quiz.service.provider.QuestionsFileProvider;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

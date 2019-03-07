@@ -1,6 +1,6 @@
-package ru.quiz.service;
+package ru.quiz.service.util;
 
-import ru.quiz.entity.Question;
+import ru.quiz.domain.Question;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.quiz.service;
+package ru.quiz.service.provider;
 
 import java.io.InputStream;
 import java.io.PrintStream;

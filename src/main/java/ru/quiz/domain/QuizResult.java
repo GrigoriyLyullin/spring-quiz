@@ -1,4 +1,4 @@
-package ru.quiz.entity;
+package ru.quiz.domain;
 
 public class QuizResult {
 

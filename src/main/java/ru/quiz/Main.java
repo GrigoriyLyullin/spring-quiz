@@ -4,8 +4,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import ru.quiz.entity.QuizResult;
-import ru.quiz.service.QuizRunner;
+import ru.quiz.domain.QuizResult;
+import ru.quiz.service.runner.QuizRunner;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

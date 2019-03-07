@@ -1,6 +1,7 @@
-package ru.quiz.service;
+package ru.quiz.service.provider;
 
 import org.junit.jupiter.api.Test;
+import ru.quiz.service.provider.QuestionsFileProviderImpl;
 
 import java.io.File;
 

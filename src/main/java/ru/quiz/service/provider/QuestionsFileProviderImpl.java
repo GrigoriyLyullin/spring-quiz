@@ -1,4 +1,4 @@
-package ru.quiz.service;
+package ru.quiz.service.provider;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

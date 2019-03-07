@@ -1,8 +1,10 @@
-package ru.quiz.service;
+package ru.quiz.service.util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.quiz.entity.Question;
+import ru.quiz.domain.Question;
+import ru.quiz.service.provider.QuestionsFileProvider;
+import ru.quiz.service.util.QuizFileReaderImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;

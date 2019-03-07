@@ -1,8 +1,8 @@
-package ru.quiz.service;
+package ru.quiz.service.provider;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.quiz.utils.IOType;
+import ru.quiz.domain.IOType;
 
 import java.io.InputStream;
 import java.io.PrintStream;

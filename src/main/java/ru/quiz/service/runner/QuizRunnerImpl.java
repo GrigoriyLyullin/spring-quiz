@@ -1,11 +1,13 @@
-package ru.quiz.service;
+package ru.quiz.service.runner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import ru.quiz.entity.Question;
-import ru.quiz.entity.QuizResult;
+import ru.quiz.domain.Question;
+import ru.quiz.domain.QuizResult;
+import ru.quiz.service.util.QuizFileReader;
+import ru.quiz.service.util.UserIO;
 
 import java.io.IOException;
 import java.util.List;
