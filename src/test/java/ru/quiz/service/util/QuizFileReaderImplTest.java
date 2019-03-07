@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.quiz.domain.Question;
 import ru.quiz.service.provider.QuestionsFileProvider;
-import ru.quiz.service.util.QuizFileReaderImpl;
+import ru.quiz.service.reader.QuizFileReaderImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;

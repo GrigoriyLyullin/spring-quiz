@@ -2,14 +2,14 @@ package ru.quiz.service.util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.quiz.service.provider.InputOutputProvider;
-import ru.quiz.service.provider.InputOutputProviderImpl;
-import ru.quiz.service.util.UserIOImpl;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import ru.quiz.service.provider.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,17 +19,33 @@ import static org.mockito.Mockito.*;
 
 class UserIOImplTest {
 
+    private static final String LANGUAGE = "en";
+
+    private static final String COUNTRY = "US";
+
     private InputOutputProvider inputOutputProvider;
 
     private PrintStream printStream;
+
+    private MessageProvider messageProvider;
+
+    private LocaleProvider localeProvider;
 
     @BeforeEach
     void setUp() {
         inputOutputProvider = mock(InputOutputProviderImpl.class);
         printStream = mock(PrintStream.class);
+        messageProvider = mock(MessageProvider.class);
+        localeProvider = new LocaleProviderImpl(LANGUAGE, COUNTRY);
 
         when(inputOutputProvider.getPrintStream()).thenReturn(printStream);
         when(inputOutputProvider.getInputStream()).thenReturn(mock(InputStream.class));
+
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("/i18n/message");
+        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.toString());
+
+        messageProvider = new MessageProviderImpl(messageSource, localeProvider);
     }
 
     @Test
@@ -44,7 +60,7 @@ class UserIOImplTest {
         });
 
         when(inputOutputProvider.getPrintStream()).thenReturn(printStream);
-        new UserIOImpl(inputOutputProvider).printLine("test");
+        new UserIOImpl(inputOutputProvider, messageProvider).printLine("test");
 
         byte[] byteArray = getBytes(output);
         String outputString = new String(byteArray);
@@ -57,7 +73,7 @@ class UserIOImplTest {
         ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
         when(inputOutputProvider.getInputStream()).thenReturn(in);
 
-        int answer = new UserIOImpl(inputOutputProvider).readAnswer(1);
+        int answer = new UserIOImpl(inputOutputProvider, messageProvider).readAnswer(1);
         assertEquals(1, answer);
     }
 
@@ -68,7 +84,7 @@ class UserIOImplTest {
         ByteArrayInputStream in = new ByteArrayInputStream(inputString.getBytes());
         when(inputOutputProvider.getInputStream()).thenReturn(in);
 
-        assertThrows(IllegalArgumentException.class, () -> new UserIOImpl(inputOutputProvider).readAnswer(1));
+        assertThrows(IllegalArgumentException.class, () -> new UserIOImpl(inputOutputProvider, messageProvider).readAnswer(1));
         verify(printStream, times(5)).println("Wrong number format!");
     }
 
@@ -79,7 +95,7 @@ class UserIOImplTest {
         ByteArrayInputStream in = new ByteArrayInputStream(inputString.getBytes());
         when(inputOutputProvider.getInputStream()).thenReturn(in);
         int max = 7;
-        int answer = new UserIOImpl(inputOutputProvider).readAnswer(max);
+        int answer = new UserIOImpl(inputOutputProvider, messageProvider).readAnswer(max);
 
         verify(printStream, times(1)).println("Answer is a number from 1 to " + max);
         assertEquals(7, answer);
@@ -88,7 +104,7 @@ class UserIOImplTest {
     @Test
     void readAnswerWhenMaxIsZero() {
         assertThrows(IllegalArgumentException.class,
-                () -> new UserIOImpl(inputOutputProvider).readAnswer(0));
+                () -> new UserIOImpl(inputOutputProvider, messageProvider).readAnswer(0));
 
     }
 

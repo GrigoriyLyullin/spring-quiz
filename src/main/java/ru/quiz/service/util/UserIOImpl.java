@@ -2,6 +2,7 @@ package ru.quiz.service.util;
 
 import org.springframework.stereotype.Service;
 import ru.quiz.service.provider.InputOutputProvider;
+import ru.quiz.service.provider.MessageProvider;
 
 import java.util.Scanner;
 
@@ -10,13 +11,17 @@ public class UserIOImpl implements UserIO {
 
     private static final int COUNT_OF_ATTEMPTS = 5;
 
-    private InputOutputProvider inputOutputProvider;
+    private final InputOutputProvider inputOutputProvider;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
-    public UserIOImpl(InputOutputProvider inputOutputProvider) {
+    private final MessageProvider messageProvider;
+
+    public UserIOImpl(InputOutputProvider inputOutputProvider, MessageProvider messageProvider) {
         this.inputOutputProvider = inputOutputProvider;
-        scanner = new Scanner(inputOutputProvider.getInputStream());
+        this.scanner = new Scanner(inputOutputProvider.getInputStream());
+
+        this.messageProvider = messageProvider;
     }
 
     @Override
@@ -37,10 +42,11 @@ public class UserIOImpl implements UserIO {
                 if (answer > 0 && answer <= max) {
                     return answer;
                 } else {
-                    printLine("Answer is a number from 1 to " + max);
+                    printLine(messageProvider.getMessage("quiz.message.answer.out.of.bounds",
+                            new String[]{String.valueOf(max)}));
                 }
             } catch (NumberFormatException e) {
-                printLine("Wrong number format!");
+                printLine(messageProvider.getMessage("quiz.message.wrong.number.format"));
             }
         }
         throw new IllegalArgumentException("Too many wrong attempts: " + COUNT_OF_ATTEMPTS);

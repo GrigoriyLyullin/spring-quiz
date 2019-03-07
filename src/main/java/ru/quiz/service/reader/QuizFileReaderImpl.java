@@ -1,4 +1,4 @@
-package ru.quiz.service.util;
+package ru.quiz.service.reader;
 
 import org.springframework.stereotype.Service;
 import ru.quiz.domain.Question;
