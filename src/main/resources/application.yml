@@ -1,0 +1,25 @@
+spring:
+    profiles: russian
+locale:
+    language: ru
+    country: RU
+question:
+    file.base: questions
+    file.ext: .csv
+user:
+    input: CONSOLE
+    output: CONSOLE
+
+---
+
+spring:
+  profiles: english
+locale:
+  language: en
+  country: US
+question:
+  file.base: questions
+  file.ext: .csv
+user:
+  input: CONSOLE
+  output: CONSOLE

@@ -8,16 +8,10 @@ import java.util.Locale;
 @Service
 public class LocaleProviderImpl implements LocaleProvider {
 
-    private final String language;
-
-    private final String country;
-
     private final Locale locale;
 
-    public LocaleProviderImpl(@Value("${language}") String language,
-                              @Value("${country}") String country) {
-        this.language = language;
-        this.country = country;
+    public LocaleProviderImpl(@Value("${locale.language}") String language,
+                              @Value("${locale.country}") String country) {
         this.locale = new Locale(language, country);
     }
 
