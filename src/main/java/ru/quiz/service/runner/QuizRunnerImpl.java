@@ -1,6 +1,5 @@
 package ru.quiz.service.runner;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import ru.quiz.domain.Question;
 import ru.quiz.domain.QuizResult;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class QuizRunnerImpl implements QuizRunner, CommandLineRunner {
+public class QuizRunnerImpl implements QuizRunner {
 
     private final UserIO userIO;
 
@@ -68,8 +67,4 @@ public class QuizRunnerImpl implements QuizRunner, CommandLineRunner {
         return userAnswer == question.getNumberOfCorrectAnswer();
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        printResult(performQuiz());
-    }
 }
