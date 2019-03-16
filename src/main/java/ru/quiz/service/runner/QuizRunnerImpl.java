@@ -1,5 +1,6 @@
 package ru.quiz.service.runner;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import ru.quiz.domain.Question;
 import ru.quiz.domain.QuizResult;
